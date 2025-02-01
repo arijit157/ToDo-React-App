@@ -87,13 +87,14 @@
   }
   
   form button {
-    padding: 16.8px;
+    padding: 13.5px;
     font-size: 17px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     min-width: 100px;
     background-color: #5dade2;
     color: var(--secondary-color);
+    font-family: "Poppins", serif;
   }
   
   span {
@@ -175,12 +176,14 @@
   .clear-btn {
     background-color: #e74c3c;
     font-size: 1.6rem;
-    padding: 1rem 2.2rem;
+    padding: 1rem 2.1rem;
     border-radius: 0.3rem;
     -webkit-border-radius: 0.3rem;
     -moz-border-radius: 0.3rem;
     -ms-border-radius: 0.3rem;
     -o-border-radius: 0.3rem;
+    color: white;
+    font-family: "Poppins", serif;
   }
   
   .clear-btn:hover {

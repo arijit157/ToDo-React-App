@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Todo.css';
 import { FaCheckCircle } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
@@ -30,9 +30,23 @@ function Todo() {
         }
     }
 
-    setInterval(() => {
-        setTime(new Date().toLocaleTimeString());
-    }, 1000);
+    useEffect(() => {
+        let intervalID = setInterval(() => {
+            setTime(new Date().toLocaleTimeString());
+        }, 1000);
+
+        return (() => {return clearInterval(intervalID)});
+    }, []);
+
+    let handleDeleteTaskItem = (el) => {
+        setTask(task.filter((t) => {
+            return t!=el;
+        }));
+    }
+    
+    let handleDeleteAllTask = () => {
+        setTask([]);
+    }
 
     return (
         <section className="todo-container">
@@ -47,7 +61,7 @@ function Todo() {
                         <input type="text" className='todo-input' autoComplete='off' value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
                     </div>
                     <div>
-                        <button type="submit" className='todo-btn'>Add Task</button>
+                        <button type="submit" className='form-btn'>Add Task</button>
                     </div>
                 </form>
             </section>
@@ -58,11 +72,14 @@ function Todo() {
                             <li key={index} className='todo-item'>
                                 <span>{el}</span>
                                 <button className='check-btn'><FaCheckCircle /></button>
-                                <button className='delete-btn'><MdDeleteForever /></button>
+                                <button className='delete-btn' onClick={() => handleDeleteTaskItem(el)}><MdDeleteForever /></button>
                             </li>
                         );
                     })}
                 </ul>
+            </section>
+            <section>
+                <button className="clear-btn" onClick={handleDeleteAllTask}>Clear All</button>
             </section>
         </section>
     )
