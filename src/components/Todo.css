@@ -61,7 +61,7 @@
     transition: background-color 200ms ease-in-out;
     width: 100%;
     background-color: #f2f3f4;
-    color: var(--primary-color);
+    color: black;
   }
   
   form input:hover {
@@ -87,7 +87,7 @@
   }
   
   form button {
-    padding: 10.8px;
+    padding: 16.8px;
     font-size: 17px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;

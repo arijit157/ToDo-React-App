@@ -1,11 +1,62 @@
-import React from 'react'
+import React, { useState } from 'react'
+import './Todo.css';
+import { FaCheckCircle } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
+
 
 function Todo() {
-  return (
-    <div>
-      <h1>Hello</h1>
-    </div>
-  )
+
+    const [inputValue, setInputValue] = useState("");
+    const[task, setTask] = useState([]);
+
+    let handleFormSubmit = (e) => {
+        e.preventDefault();
+
+        if(inputValue.length === 0){
+            return;
+        }
+        // setTask((prev) => [...prev, inputValue]);
+        if(!task.includes(inputValue)){
+            task.push(inputValue);
+            console.log(task);
+            setTask(task);
+            setInputValue("");
+        }
+        else{
+            setInputValue("");
+        }
+    }
+
+    return (
+        <section className="todo-container">
+            <header>
+                <h1>Todo List App</h1>
+            </header>
+            <section className='form'>
+                <form onSubmit={(event) => handleFormSubmit(event)}>
+                    <div>
+                        <input type="text" className='todo-input' autoComplete='off' value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
+                    </div>
+                    <div>
+                        <button type="submit" className='todo-btn'>Add Task</button>
+                    </div>
+                </form>
+            </section>
+            <section className='myUnOrdList'>
+                <ul>
+                    {task.map((el, index) => {
+                        return(
+                            <li key={index} className='todo-item'>
+                                <span>{el}</span>
+                                <button className='check-btn'><FaCheckCircle /></button>
+                                <button className='delete-btn'><MdDeleteForever/></button>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </section>
+        </section>
+    )
 }
 
 export default Todo
