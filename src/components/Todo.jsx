@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Todo.css';
-import { FaCheckCircle } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import TodoForm from './TodoForm';
+import TodoList from './TodoList';
 
 
 function Todo() {
@@ -50,17 +49,13 @@ function Todo() {
                 <h2 className='date-time'>{new Date().toLocaleDateString()} - {time}</h2>
             </header>
 
-            <TodoForm formSubmit={(event) => handleFormSubmit(event)} />
+            <TodoForm formSubmit={handleFormSubmit} />
 
             <section className='myUnOrdList'>
                 <ul>
                     {task.map((el, index) => {
                         return (
-                            <li key={index} className='todo-item'>
-                                <span>{el}</span>
-                                <button className='check-btn'><FaCheckCircle /></button>
-                                <button className='delete-btn' onClick={() => handleDeleteTaskItem(el)}><MdDeleteForever /></button>
-                            </li>
+                            <TodoList key={index} todoName={el} deleteTask={handleDeleteTaskItem} />
                         );
                     })}
                 </ul>
