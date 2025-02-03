@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './Todo.css';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
@@ -10,21 +10,37 @@ function Todo() {
 
     let handleFormSubmit = (inputValue) => {
 
-        if (inputValue.length === 0) {
+        let {id, content, checked} = inputValue;
+
+        if (content.length === 0) {
             return;
         }
 
-        // setTask((prev) => [...prev, inputValue]);
+        // let flag = false;
 
-        if (!task.includes(inputValue)) {
-            task.push(inputValue);
-            setTask(task);
+        // task.forEach((item) => {
+        //     if(item.content === content){
+        //         flag = true;
+        //         return;
+        //     }
+        // });
+
+        // if(!flag){
+        //     setTask((prev) => [...prev, inputValue]);
+        // }
+
+        let ifTodoContentMatched = task.find((item) => item.content === content);
+
+        if(ifTodoContentMatched){
+            return;
         }
+
+        setTask((prev) => [...prev, {id, content, checked}]);
     }
 
     let handleDeleteTaskItem = (el) => {
         setTask(task.filter((t) => {
-            return t!=el;
+            return t.content!=el;
         }));
     }
     
@@ -43,9 +59,9 @@ function Todo() {
 
             <section className='myUnOrdList'>
                 <ul>
-                    {task.map((el, index) => {
+                    {task.map((el) => {
                         return (
-                            <TodoList key={index} todoName={el} deleteTask={handleDeleteTaskItem} />
+                            <TodoList key={el.id} todoName={el.content} deleteTask={handleDeleteTaskItem} />
                         );
                     })}
                 </ul>
