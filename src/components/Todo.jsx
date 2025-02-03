@@ -4,13 +4,22 @@ import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import TodoDate from './TodoDate';
 
+const todoKey = "todos";
+console.warn(1+2);
 
 function Todo() {
-    const [task, setTask] = useState([]);
+    const [task, setTask] = useState(() => {
+        let rawTodos = localStorage.getItem(todoKey);
+        if(!rawTodos)
+        {
+            return [];
+        }
+        return JSON.parse(rawTodos);
+    });
 
     let handleFormSubmit = (inputValue) => {
 
-        let {id, content, checked} = inputValue;
+        let { id, content, checked } = inputValue;
 
         if (content.length === 0) {
             return;
@@ -31,27 +40,29 @@ function Todo() {
 
         let ifTodoContentMatched = task.find((item) => item.content === content);
 
-        if(ifTodoContentMatched){
+        if (ifTodoContentMatched) {
             return;
         }
 
-        setTask((prev) => [...prev, {id, content, checked}]);
+        setTask((prev) => [...prev, { id, content, checked }]);
     }
+
+    localStorage.setItem("todos", JSON.stringify(task));
 
     let handleDeleteTaskItem = (el) => {
         setTask(task.filter((t) => {
-            return t.content!=el;
+            return t.content != el;
         }));
     }
-    
+
     let handleDeleteAllTask = () => {
         setTask([]);
     }
 
     let handleCheckUncheck = (taskName) => {
         let updatedTodos = task.map((curElem) => {
-            if(curElem.content === taskName){
-                return ({...curElem, checked:!curElem.checked});
+            if (curElem.content === taskName) {
+                return ({ ...curElem, checked: !curElem.checked });
             }
             return curElem;
         });
@@ -63,7 +74,7 @@ function Todo() {
         <section className="todo-container">
             <header>
                 <h1>Todo List App</h1>
-                <TodoDate/>
+                <TodoDate />
             </header>
 
             <TodoForm formSubmit={handleFormSubmit} />
