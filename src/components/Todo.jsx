@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react'
 import './Todo.css';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+import TodoDate from './TodoDate';
 
 
 function Todo() {
-
-    
     const [task, setTask] = useState([]);
-    let[time, setTime] = useState("");
 
     let handleFormSubmit = (inputValue) => {
 
@@ -24,14 +22,6 @@ function Todo() {
         }
     }
 
-    useEffect(() => {
-        let intervalID = setInterval(() => {
-            setTime(new Date().toLocaleTimeString());
-        }, 1000);
-
-        return (() => {return clearInterval(intervalID)});
-    }, []);
-
     let handleDeleteTaskItem = (el) => {
         setTask(task.filter((t) => {
             return t!=el;
@@ -46,7 +36,7 @@ function Todo() {
         <section className="todo-container">
             <header>
                 <h1>Todo List App</h1>
-                <h2 className='date-time'>{new Date().toLocaleDateString()} - {time}</h2>
+                <TodoDate/>
             </header>
 
             <TodoForm formSubmit={handleFormSubmit} />
