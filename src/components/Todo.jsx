@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react'
 import './Todo.css';
 import { FaCheckCircle } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import TodoForm from './TodoForm';
 
 
 function Todo() {
 
-    const [inputValue, setInputValue] = useState("");
+    
     const [task, setTask] = useState([]);
     let[time, setTime] = useState("");
 
-    let handleFormSubmit = (e) => {
-
-        e.preventDefault();
+    let handleFormSubmit = (inputValue) => {
 
         if (inputValue.length === 0) {
             return;
@@ -23,10 +22,6 @@ function Todo() {
         if (!task.includes(inputValue)) {
             task.push(inputValue);
             setTask(task);
-            setInputValue("");
-        }
-        else {
-            setInputValue("");
         }
     }
 
@@ -55,16 +50,8 @@ function Todo() {
                 <h2 className='date-time'>{new Date().toLocaleDateString()} - {time}</h2>
             </header>
 
-            <section className='form'>
-                <form onSubmit={(event) => handleFormSubmit(event)}>
-                    <div>
-                        <input type="text" className='todo-input' autoComplete='off' value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
-                    </div>
-                    <div>
-                        <button type="submit" className='form-btn'>Add Task</button>
-                    </div>
-                </form>
-            </section>
+            <TodoForm formSubmit={(event) => handleFormSubmit(event)} />
+
             <section className='myUnOrdList'>
                 <ul>
                     {task.map((el, index) => {
